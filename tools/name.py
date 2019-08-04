@@ -1,3 +1,11 @@
+'''
+Contains methods that will generate names for nodes whose names have not been explicitly defined. 
+
+WORK IN PROGRESS. EXPECT TO START WORKING PROPERLY AFTER 10 ITERATIONS OF COMMITS. 
+
+@Author: Jeet Dutta
+'''
+
 import os
 def assign_name():
     if(not os.path.exists("temp_names.txt")):
