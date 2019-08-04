@@ -28,7 +28,7 @@ class DataNode(Node):
         self.value = value
 
     def __repr__(self):
-        s = super().__repr__()
+        #s = super().__repr__()
         return "DataNode: " + str(self.value)
     def __str__(self):
         return "DataNode: " + str(self.value)
