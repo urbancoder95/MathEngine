@@ -21,31 +21,32 @@ class Node():
         return self.__repr__()
 
 class DataNode(Node):
-    def __init__(self, value):
+    def __init__(self, value, name: str = None):
         '''Defines a node to store a data. This can be a constant or a variable. 
         '''
-        super().__init__(value = value)
+        super().__init__(name = name)
         self.value = value
 
     def __repr__(self):
-        #s = super().__repr__()
-        return "DataNode: " + str(self.value)
+        name = super().__repr__()
+        return name + ": " + str(self.value)
     def __str__(self):
-        return "DataNode: " + str(self.value)
+        return self.__repr__()
 
 class OpNode(Node):
-    def __init__(self, left: DataNode, right: DataNode, op: str):
+    def __init__(self, op: str, name: str = None):
         '''Defines a node to store the type of operation. This is an unbiased type operation 
         which can take on any mathematical operation.
         '''
-        super().__init__(op = op)
+        super().__init__(name = name)
         self.op = op
     
     def __repr__(self):
-        return "OpNode: " + self.op
+        name = super().__repr__()
+        return name + ": " + self.op
     
     def __str__(self):
-        return "OpNode: " + self.op
+        return self.__repr__()
 
 
 # class ErroneousNode(Node):
@@ -53,8 +54,53 @@ class OpNode(Node):
 #         super().__init__(value = value, op = op)
 #         print("Exiting as error occurred")
 
+# Define some types of data nodes
+
+class Tensor(DataNode, list):
+    def __init__(self, value, name: str = None):
+        '''
+        Defines a tensor of an arbitrary shape. 
+        @param value: list or scalar.
+        @param name: Assign a name to the node.
+        '''
+        self.value = value
+        self.shape = self.__shape__()
+
+    def __shape__(self):
+        try:
+            length = len(self.value)
+        except TypeError:
+            length = 0
+        if(self.value == None):
+            return ()
+        elif(length == 0 and (type(self.value) == int or type(self.value) == float)):
+            return ()
+        elif(len(self.value) > 0):
+            check_len = 0
+            while(check_len > 0):
+                pass #START FROM HERE
+    def __check_len__(iter):
+        try:
+            length = len(iter[0])
+        except TypeError:
+            length = 0
+        for i in iter[1:]:
+            try:
+                length2 = len(i)
+            except TypeError:
+                length2 = 0
+            if(not(length2 == length)):
+                raise LengthError('Multiple dimensions detected.')
+            elif(length2 == 0):
+                return 0
+            else:
+                pass
+        return length
+    def __repr__(self):
+        return 
+
 class Variable(DataNode):
-    def __init__(self, name = None):
+    def __init__(self, name: str = None):
         if(name == None):
             self.name = 'x'
         else:
@@ -70,7 +116,7 @@ class Variable(DataNode):
 
 
 class BinaryOp(OpNode):
-    def __init__(self, left: DataNode, right: DataNode, op: OpNode):
+    def __init__(self, left: DataNode, right: DataNode, op: OpNode, name: str = None):
         super().__init__(op == op)
         self.left = left
         self.right = right
