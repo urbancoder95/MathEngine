@@ -79,7 +79,7 @@ class Tensor(DataNode, list):
             check_len = 0
             while(check_len > 0):
                 pass #START FROM HERE
-    def __check_len__(iter):
+    def __check_len__(self, iter):
         try:
             length = len(iter[0])
         except TypeError:
