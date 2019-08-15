@@ -1,0 +1,7 @@
+class LengthError(Exception):
+    '''
+    This is called when there is a length error.
+    '''
+    def __init__(self, length1, length2):
+        message = "LENGTH MISMATCHED.\nCertain values are of length " + str(length1) + " and " + str(length2) + ".\n"
+        super.message = message

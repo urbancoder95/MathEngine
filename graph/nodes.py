@@ -5,6 +5,7 @@ Node class which consists of the basic definitions required by any node. The res
 @Author: Jeet Dutta
 '''
 from tools import name
+
 class Node():
     def __init__(self, name: str = None):
         '''
@@ -47,91 +48,3 @@ class OpNode(Node):
     
     def __str__(self):
         return self.__repr__()
-
-
-# class ErroneousNode(Node):
-#     def __init__(self, value, op):
-#         super().__init__(value = value, op = op)
-#         print("Exiting as error occurred")
-
-# Define some types of data nodes
-
-class Tensor(DataNode, list):
-    def __init__(self, value, name: str = None):
-        '''
-        Defines a tensor of an arbitrary shape. 
-        @param value: list or scalar.
-        @param name: Assign a name to the node.
-        '''
-        self.value = value
-        self.shape = self.__shape__()
-
-    def __shape__(self):
-        try:
-            length = len(self.value)
-        except TypeError:
-            length = 0
-        if(self.value == None):
-            return ()
-        elif(length == 0 and (type(self.value) == int or type(self.value) == float)):
-            return ()
-        elif(len(self.value) > 0):
-            check_len = 0
-            while(check_len > 0):
-                pass #START FROM HERE
-    def __check_len__(self, iter):
-        try:
-            length = len(iter[0])
-        except TypeError:
-            length = 0
-        for i in iter[1:]:
-            try:
-                length2 = len(i)
-            except TypeError:
-                length2 = 0
-            if(not(length2 == length)):
-                raise LengthError('Multiple dimensions detected.')
-            elif(length2 == 0):
-                return 0
-            else:
-                pass
-        return length
-    def __repr__(self):
-        return 
-
-class Variable(DataNode):
-    def __init__(self, name: str = None):
-        if(name == None):
-            self.name = 'x'
-        else:
-            self.name = name
-        super().__init__(value = self.name)
-        self.value = self.name
-
-    def __repr__(self):
-        return "Variable: " + self.value
-    
-    def __str__(self):
-        return "Variable: " + self.value
-
-
-class BinaryOp(OpNode):
-    def __init__(self, left: DataNode, right: DataNode, op: OpNode, name: str = None):
-        super().__init__(op == op)
-        self.left = left
-        self.right = right
-    
-    def __repr__(self):
-        return self.left.name + self.op.symbol + self.right.name
-
-    def __str__(self):
-        return self.__repr__()
-
-class UnbiasedNodeException(Exception):
-    def __init__(self, message):
-        self.message = message
-
-# if __name__ == '__main__':
-#     obj = DataNode(3)
-#     print(obj)
-#     obj = ErroneousNode(obj.value, '+')
