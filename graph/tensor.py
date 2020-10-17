@@ -1,8 +1,9 @@
 from .nodes import DataNode
 from utils.errors import LengthError
+# from collections import UserList
 
 
-class Tensor(DataNode, list):
+class Tensor(DataNode):
     """
     Defines a tensor of an arbitrary shape.
     @param value: list or scalar.
@@ -10,9 +11,52 @@ class Tensor(DataNode, list):
     """
     def __init__(self, value, name: str = None):
 
-        super(DataNode, Tensor).__init__()
-        self.value = value
+        super(Tensor, self).__init__(value, name=name)
+        # self.value = value
+        self.__data = value
+        self.name = name
         self.shape = self.__shape__()
+
+    def __getitem__(self, item):
+        """
+        Overriden __getitem__ method aiding in accessing elements in the Tensor.
+        :param item: int or slice. The index of a/group of element(s).
+        :return: element(s) of
+        """
+        if type(item) == int:
+            return self.__data[item]
+        elif type(item) == slice:
+            return self.__data[item]
+        elif type(item) == tuple:
+            # print(item)
+            temp = self.__data
+            # print(temp)
+            for i in item:
+                if type(i) == slice:
+                    temp = temp[i]
+                elif type(i) == int:
+                    temp2 = []
+                    for j in temp:
+                        try:
+                            temp2.append(j[i])
+                        except TypeError:
+                            raise IndexError("Too many indices for Tensor.")
+                    temp = temp2
+                    del temp2
+                else:
+                    raise TypeError("Expected integer or slices.")
+                # print(temp)
+            return temp
+        else:
+            raise TypeError("Expected integer or slices.")
+        # return item
+
+    def __len__(self):
+        """
+        Overriden __len__ method.
+        :return: shape of the Tensor.
+        """
+        return self.shape
 
     def __shape__(self):
         """
@@ -30,21 +74,21 @@ class Tensor(DataNode, list):
         # If it throws a TypeError 
         # (which is because it is not a list), then it's a list.
         try:
-            length = len(self.value)
+            length = len(self.__data)
         except TypeError:
             length = 0
         # Now we check if value is None, which means it is empty. None itself is a scalar value.
-        if self.value is None:
+        if self.__data is None:
             return ()
         # We check weather the value is not None but still scalar of types int or float. 
-        elif length == 0 and (type(self.value) == int or type(self.value) == float):
+        elif length == 0 and (type(self.__data) == int or type(self.__data) == float):
             return ()
         # Then we check for the entire shape of the value
-        elif len(self.value) > 0:
-            length = len(self.value)
+        elif len(self.__data) > 0:
+            length = len(self.__data)
             shape = list()
             index = 0
-            next_val = self.value
+            next_val = self.__data
             while length > 0:
                 # Keep on adding values to the shape
                 # attribute until a scalar is encountered
@@ -55,10 +99,10 @@ class Tensor(DataNode, list):
         else:
             raise TypeError("Can only work with values of type " +
                             "\'int\' or \'float\' not \'" +
-                            type(self.value).__name__ + "\'")
+                            type(self.__data).__name__ + "\'")
 
     def __check_len__(self, next_val):
-        # Checks the length of the inner elements of next_val. 
+        # Checks the length of the inner elements of next_val.
         # NEEDS IMPROVEMENT AS IT DOES NOT NEST FOR ALL THE INNER VALUES
         # TILL NOW JUST THE FIRST ELEMENT OF EVERY NESTED INNER TENSOR.
         try:
@@ -78,4 +122,7 @@ class Tensor(DataNode, list):
         return length
 
     def __repr__(self):
-        return
+        return "<class:{} value:{} name:\"{}\">".format("Tensor", self.__data, self.name)
+
+    def __str__(self):
+        return "<class:{} value:{} name:\"{}\">".format("Tensor", self.__data, self.name)
