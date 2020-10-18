@@ -29,11 +29,21 @@ class Tensor(DataNode, list):
         # If it throws a TypeError 
         # (which is because it is not a list), then it's a list.
         try:
+<<<<<<< Updated upstream
             length = len(self.value)
         except TypeError:
             length = 0
         # Now we check if value is None, which means it is empty. None itself is a scalar value.
         if self.value is None:
+=======
+            length = len(self.__data)
+            self.__findList__(self.__data)
+            print("No Dimension mismatch error")
+        except TypeError:
+            length = 0
+        '''# Now we check if value is None, which means it is empty. None itself is a scalar value.
+        if self.__data is None:
+>>>>>>> Stashed changes
             return ()
         # We check weather the value is not None but still scalar of types int or float. 
         elif length == 0 and (type(self.value) == int or type(self.value) == float):
@@ -54,8 +64,37 @@ class Tensor(DataNode, list):
         else:
             raise TypeError("Can only work with values of type " +
                             "\'int\' or \'float\' not \'" +
+<<<<<<< Updated upstream
                             type(self.value).__name__ + "\'")
 
+=======
+                            type(self.__data).__name__ + "\'")'''
+            
+    def __findList__(self, listVal):
+        print(listVal)
+        flag, tempList = self.__checkLengthOfElements__(listVal)
+        if(len(tempList) == 1 and tempList[0] <= 1):
+            return 
+        if(flag):
+            for elem in listVal: 
+                self.__findList__(elem)
+                return 
+        else:
+            raise Exception("Dimension mismatch of vector components" + listVal)
+                
+    def __checkLengthOfElements__(value):
+        temp = []
+        for item in value:
+            try:
+                val = len(item)
+                temp.append(val)
+            except:
+                temp.append(1)
+        print(temp)
+        return all(i == item[0] for i in temp), temp
+            
+    
+>>>>>>> Stashed changes
     def __check_len__(self, next_val):
         # Checks the length of the inner elements of next_val. 
         # NEEDS IMPROVEMENT AS IT DOES NOT NEST FOR ALL THE INNER VALUES
