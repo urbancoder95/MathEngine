@@ -119,7 +119,7 @@ class Tensor(DataNode):
         # If it throws a TypeError
         # (which is because it is not a list), then it's a list.
         try:
-            length = len(self.value)
+            length = len(self.data)
             self.__findList__(self.data)
             # print("No Dimension mismatch error")
         except TypeError:
