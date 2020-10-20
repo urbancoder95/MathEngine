@@ -1,5 +1,7 @@
 from .nodes import DataNode
 from utils.errors import LengthError
+
+
 # from collections import UserList
 
 
@@ -9,12 +11,13 @@ class Tensor(DataNode):
     @param value: list or scalar.
     @param name: Assign a name to the node.
     """
+
     def __init__(self, value, name: str = None):
 
         super(Tensor, self).__init__(value, name=name)
         self.data = value
         self.name = name
-        self.shape = self.__shape__()
+        self.shape = self.__shapenew__()
 
     def __getitem__(self, item):
         """
@@ -116,23 +119,23 @@ class Tensor(DataNode):
         # If it throws a TypeError
         # (which is because it is not a list), then it's a list.
         try:
-            length = len(self.__data)
-            self.__findList__(self.__data)
-            print("No Dimension mismatch error")
+            length = len(self.value)
+            self.__findList__(self.data)
+            # print("No Dimension mismatch error")
         except TypeError:
             length = 0
         # Now we check if value is None, which means it is empty. None itself is a scalar value.
-        if self.__data is None:
+        '''if self.data is None:
             return ()
         # We check weather the value is not None but still scalar of types int or float.
-        elif length == 0 and (type(self.__data) == int or type(self.__data) == float):
+        elif length == 0 and (type(self.data) == int or type(self.data) == float):
             return ()
         # Then we check for the entire shape of the value
-        elif len(self.__data) > 0:
-            length = len(self.__data)
+        elif len(self.value) > 0:
+            length = len(self.data)
             shape = list()
             index = 0
-            next_val = self.__data
+            next_val = self.data
             while length > 0:
                 # Keep on adding values to the shape
                 # attribute until a scalar is encountered
@@ -143,30 +146,28 @@ class Tensor(DataNode):
         else:
             raise TypeError("Can only work with values of type " +
                             "\'int\' or \'float\' not \'" +
-                            type(self.__data).__name__ + "\'")
+                            type(self.__data).__name__ + "\'")'''
 
     def __findList__(self, listVal):
         print(listVal)
         flag, tempList = self.__checkLengthOfElements__(listVal)
-        if (len(tempList) == 1 and tempList[0] <= 1):
+        if len(tempList) == 1 and tempList[0] <= 1 :
             return
-        if (flag):
+        if flag:
             for elem in listVal:
                 self.__findList__(elem)
-                return
         else:
-            raise Exception("Dimension mismatch of vector components" + listVal)
+            print("Dimension mismatch of vector components {}".format(listVal))
 
-    def __checkLengthOfElements__(self,value):
+    def __checkLengthOfElements__(self, value):
         temp = []
         for item in value:
             try:
                 val = len(item)
                 temp.append(val)
-            except:
+            except TypeError:
                 temp.append(1)
-        print(temp)
-        return all(i == item[0] for i in temp), temp
+        return all(i == temp[0] for i in temp), temp
 
     def __check_len__(self, next_val):
         # Checks the length of the inner elements of next_val.
