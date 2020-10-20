@@ -1,5 +1,5 @@
 from .nodes import DataNode
-from utils.errors import LengthError
+from utils.errors import *
 
 
 # from collections import UserList
@@ -157,7 +157,10 @@ class Tensor(DataNode):
             for elem in listVal:
                 self.__findList__(elem)
         else:
-            print("Dimension mismatch of vector components {}".format(listVal))
+            # print("Dimension mismatch of vector components {}".format(listVal))
+            raise DimensionMismatchError
+            # print("Dimension mismatch of vector components {}".format(listVal))
+
 
     def __checkLengthOfElements__(self, value):
         temp = []
