@@ -157,7 +157,6 @@ class Tensor(DataNode):
             for elem in listVal:
                 self.__findList__(elem)
         else:
-            # print("Dimension mismatch of vector components {}".format(listVal))
             raise DimensionMismatchError
             # print("Dimension mismatch of vector components {}".format(listVal))
 
