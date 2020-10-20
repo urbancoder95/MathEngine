@@ -12,8 +12,7 @@ class Tensor(DataNode):
     def __init__(self, value, name: str = None):
 
         super(Tensor, self).__init__(value, name=name)
-        # self.value = value
-        self.__data = value
+        self.data = value
         self.name = name
         self.shape = self.__shape__()
 
@@ -24,12 +23,12 @@ class Tensor(DataNode):
         :return: element(s) of
         """
         if type(item) == int:
-            return self.__data[item]
+            return Tensor(self.data[item])
         elif type(item) == slice:
-            return self.__data[item]
+            return Tensor(self.data[item])
         elif type(item) == tuple:
             # print(item)
-            temp = self.__data
+            temp = self.data
             # print(temp)
             for i in item:
                 if type(i) == slice:
@@ -46,7 +45,7 @@ class Tensor(DataNode):
                 else:
                     raise TypeError("Expected integer or slices.")
                 # print(temp)
-            return temp
+            return Tensor(temp)
         else:
             raise TypeError("Expected integer or slices.")
         # return item
@@ -74,21 +73,21 @@ class Tensor(DataNode):
         # If it throws a TypeError 
         # (which is because it is not a list), then it's a list.
         try:
-            length = len(self.__data)
+            length = len(self.data)
         except TypeError:
             length = 0
         # Now we check if value is None, which means it is empty. None itself is a scalar value.
-        if self.__data is None:
+        if self.data is None:
             return ()
         # We check weather the value is not None but still scalar of types int or float. 
-        elif length == 0 and (type(self.__data) == int or type(self.__data) == float):
+        elif length == 0 and (type(self.data) == int or type(self.data) == float):
             return ()
         # Then we check for the entire shape of the value
-        elif len(self.__data) > 0:
-            length = len(self.__data)
+        elif len(self.data) > 0:
+            length = len(self.data)
             shape = list()
             index = 0
-            next_val = self.__data
+            next_val = self.data
             while length > 0:
                 # Keep on adding values to the shape
                 # attribute until a scalar is encountered
@@ -99,7 +98,7 @@ class Tensor(DataNode):
         else:
             raise TypeError("Can only work with values of type " +
                             "\'int\' or \'float\' not \'" +
-                            type(self.__data).__name__ + "\'")
+                            type(self.data).__name__ + "\'")
 
     def __check_len__(self, next_val):
         # Checks the length of the inner elements of next_val.
@@ -122,7 +121,7 @@ class Tensor(DataNode):
         return length
 
     def __repr__(self):
-        return "<class:{} value:{} name:\"{}\">".format("Tensor", self.__data, self.name)
+        return "<class:{} value:{} name:\"{}\">".format("Tensor", self.data, self.name)
 
     def __str__(self):
-        return "<class:{} value:{} name:\"{}\">".format("Tensor", self.__data, self.name)
+        return "<class:{} value:{} name:\"{}\">".format("Tensor", self.data, self.name)

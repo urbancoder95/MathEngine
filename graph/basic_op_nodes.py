@@ -36,7 +36,7 @@ class BinaryOpNode(OpNode):
 
 class Add(BinaryOpNode):
     """
-
+    Adds 2 tensors.
     """
     def __init__(self, name: str = None):
         super(Add, self).__init__(OpNode('add'), name)
@@ -44,5 +44,8 @@ class Add(BinaryOpNode):
 
     def __call__(self, left: Tensor, right: Tensor, *args, **kwargs):
         temp = None
-        # if len(left.shape) == 0 and len(right.shape) == 0:
-        pass
+        if len(left.shape) == 0 and len(right.shape) == 0:
+            return Tensor(left.data + right.data)
+        else:
+            print("Add does not support multi-dimensional lists yet.")
+            # if len(left.shape) > len(right.shape):
