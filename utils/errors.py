@@ -12,5 +12,5 @@ class DimensionMismatchError(Exception):
     This is called when there is dimension mismatch in the defined tensor.
     """
     def __init__(self):
-        self.message = "DIMENSION MISMATCHED.\nCertain values do not conform the required shape " + ".\n"
+        self.message = "DIMENSION MISMATCHED.\nCertain values do not conform to the required shape " + ".\n"
         super().__init__(self.message)

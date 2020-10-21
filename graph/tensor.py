@@ -17,7 +17,8 @@ class Tensor(DataNode):
         super(Tensor, self).__init__(value, name=name)
         self.data = value
         self.name = name
-        self.shape = self.__shapenew__()
+        self.shape = []
+        self.__shapenew__()
 
     def __getitem__(self, item):
         """
@@ -149,11 +150,12 @@ class Tensor(DataNode):
                             type(self.__data).__name__ + "\'")'''
 
     def __findList__(self, listVal):
-        print(listVal)
         flag, tempList = self.__checkLengthOfElements__(listVal)
-        if len(tempList) == 1 and tempList[0] <= 1 :
+        if len(tempList) == 0 and tempList[0] <= 1 :
             return
         if flag:
+            if not self.shape.__contains__(len(tempList)):
+                self.shape.append(len(tempList))
             for elem in listVal:
                 self.__findList__(elem)
         else:
