@@ -14,5 +14,6 @@ Dates are in DD-MM-YYYY format.
 2. (15-08-2019) Completed functionality of shape method in the `Tensor` class and created the `Constant` class. Started working on the op nodes. 
 3. (21.10.2020) Changed the shape method to shapenew which computes the shape of the given tensor and throws appropriate DIMENSION MISMATCH error
                 in case of any mismatch in any level.
+4. (10.04.2021) Started with the C++ backend for the engine. C++ will account for superior parallel processing schemas. Will try and finish the class skeleton ASAP. (jtdutta1)
 
 __IMPROVEMENT NOTES:__ Change the inheritence from list to iterator. Define Tensor class from scratch with changes to value indexing. 

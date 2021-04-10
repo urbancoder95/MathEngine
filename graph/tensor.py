@@ -151,7 +151,7 @@ class Tensor(DataNode):
 
     def __findList__(self, listVal):
         flag, tempList = self.__checkLengthOfElements__(listVal)
-        if len(tempList) == 0 and tempList[0] <= 1 :
+        if len(tempList) == 0 and tempList[0] <= 1:
             return
         if flag:
             if not self.shape.__contains__(len(tempList)):
@@ -161,7 +161,6 @@ class Tensor(DataNode):
         else:
             raise DimensionMismatchError
             # print("Dimension mismatch of vector components {}".format(listVal))
-
 
     def __checkLengthOfElements__(self, value):
         temp = []

@@ -6,3 +6,4 @@ variable.py
 ops.py
 /Untitled.ipynb
 /.ipynb_checkpoints/
+*.out
